@@ -1,0 +1,88 @@
+<초기 설정>
+
+- General - Appearance -> Dark
+	- workspace -> UTF-8
+	- web Browser -> use external web browser, chrome
+- Web - CSS Files, HTML Files, JSP Files -> UTF-8
+
+Tomcat
+- use Tomcat installation ~ 체크 -> 이거 하면 로컬호스트:포트 했을때 고양이 뜸, 안해도 프로젝트 서버로 돌리는거는 되는데 고양이가 안뜸
+- Publish module ~ XML files 체크
+- Port - 8090 우분투에서 8080쓰니까 겹치지 않게
+
+
+*** Spring Legacy Project -> MVN이 안뜬다? 
+	-> Configure templates -> spring-data-gemfire와 spring-integeration을 눌러 Remove
+
+* Build path - library = junit 5
+
+
+* pom.xml
+ - java-version = 11
+ - org.springframework-version = 5.0.8
+ - org.apache.maven.plugins - source, target = 11
+ - dependencies
+   * 롬복 추가
+   <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.0</version>
+		    <scope>provided</scope>
+		</dependency>
+
+   * 스프링 프레임워크 관련
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+   
+   * log4j
+	- log4j - version = 1.2.17, <!-- <scope>runtime</scope> -->
+
+   * MyBatis
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>2.7.8</version>
+		</dependency>
+		
+		
+		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.4.6</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.bgee.log4jdbc-log4j2</groupId>
+			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+			<version>1.16</version>
+		</dependency>
+
+   * Servlet
+		<dependency>
+			<groupId>javax.servlet</groupId>
+  			<artifactId>javax.servlet-api</artifactId>
+ 			<version>3.1.0</version>
+  			<scope>provided</scope>
+		</dependency>
