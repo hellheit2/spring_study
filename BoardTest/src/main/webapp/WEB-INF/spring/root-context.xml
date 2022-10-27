@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+		<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">   
+<!-- 	<property name ="driverClassName" value="oracle.jdbc.OracleDriver"></property>  
+        <property name ="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:XE"></property>  -->
+     	<property name ="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+        <property name ="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
+
+		<property name ="username" value="book_ex"></property>   
+		<property name ="password" value="12345"></property>
+		<!-- <property name="dataSourceProperties">
+            <props>
+                <prop key="cachePrepStmts">true</prop>
+                <prop key="prepStmtCacheSize">250</prop>
+                <prop key="prepStmtCacheSqlLimit">2048</prop>
+            </props>
+        </property> -->
+	</bean>
+	
+	<!-- HikariCP configuration -->
+	<!--hikariconfig설정을 가진 datasource 빈클래스-->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+	
+	<!--hikari_datasource를 가진 mybatis_sqlsessionfactory-->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		 <!--Mapper.xml 경로설정-->
+		<property name="mapperLocations" value="classpath:/org/zerock/mapper/*.xml"></property>
+	</bean>
+	
+	<!--mapper 인터페이스를 스캔하는 경로-->
+	<mybatis-spring:scan base-package="org.zerock.mapper"/>
+	
+	<!-- service 스캔 경로 -->
+	<context:component-scan base-package="org.zerock.service"/>
+		
+</beans>
